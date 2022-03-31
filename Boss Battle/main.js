@@ -53,8 +53,11 @@ function attack(attacker, defender) {
   let elem = document.getElementById(defender.id+'-health')
   let progressBar = elem.querySelector(".progress-bar")
   defender.health -= calculateDamage(attacker)
+  console.log(defender.health)
   if (defender.health <= 0) {
     defender.health = 0
+    console.log(defender)
+    console.log(defeated(defender))
     defeated(defender)
   }
   progressBar.style.width = defender.health + '%'
@@ -64,13 +67,14 @@ function calculateDamage(attacker) {
   return Math.floor(Math.random()*(2 * attacker.damage + 1))
 }
 
-function defeated(defender) {
-  if (defender === workingVillain){
-    console.log(defender, workingVillain)
+function defeated(loser) {
+  if (loser === workingVillain){
+    console.log(loser, workingVillain)
     resetGame()
     levelUp()
   }
-  if (defender === workingHero){
+  if (loser === workingHero){
+    console.log("Hero Defeated")
     resetGame()
   }
 }
@@ -87,14 +91,18 @@ function startGame() {
 }
 
 function resetGame() {
-  console.log('YOU ARE DEAD, SCOOBY DOO')
+  workingVillain = JSON.parse(JSON.stringify(villainStart))
+  workingHero = JSON.parse(JSON.stringify(heroStart))
+  console.log('Resetting game')
   clearInterval(timerId)
   let minerElem = document.getElementById(workingVillain.id+'-health')
-  console.log(workingVillain.id+'-health')
   let heroElem = document.getElementById(workingHero.id+'-health')
-  console.log(workingHero.id+'-health')
   let minerProgressBar = minerElem.querySelector(".progress-bar")
   let heroProgressBar = heroElem.querySelector(".progress-bar")
-  minerProgressBar.style.width = "100%"
-  heroProgressBar.style.width = "100%"
+  console.log(minerProgressBar)
+  console.log(heroProgressBar)
+  minerProgressBar.style.width = workingVillain.health + '%'
+  heroProgressBar.style.width = workingHero.health + '%'
+  console.log('reset', minerProgressBar)
+  console.log('reset', heroProgressBar)
 }
