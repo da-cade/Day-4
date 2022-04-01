@@ -48,6 +48,7 @@ const villainStart = {
 
 let workingVillain = JSON.parse(JSON.stringify(villainStart))
 let workingHero = JSON.parse(JSON.stringify(heroStart))
+let timerId
 
 function attack(attacker, defender) {
   let elem = document.getElementById(defender.id+'-health')
